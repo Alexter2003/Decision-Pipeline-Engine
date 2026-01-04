@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Rule_Group {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(155)
+  description String?  @db.VarChar(255)
+  is_default  Boolean  @default(false)
+  domain      String   @db.VarChar(255)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  //relations
+  ruleGroupRules    Rule_Group_Rule[]
+  ruleExecutionLogs rule_execution_logs[]
+
+  @@map("RE_RuleGroup")
+}
+
+model Rule {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(155)
+  description    String?  @db.VarChar(255)
+  priority       Int      @default(0)
+  decision_logic Json     @default("{}") @db.JsonB
+  outcome        Json     @default("{}") @db.JsonB
+  is_active      Boolean  @default(true)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  //relations
+  ruleGroupRules Rule_Group_Rule[]
+
+  @@map("RE_Rule")
+}
+
+model Rule_Group_Rule {
+  id       Int @id @default(autoincrement())
+  group_id Int @db.Integer
+  rule_id  Int @db.Integer
+
+  //relations
+  group Rule_Group @relation(fields: [group_id], references: [id])
+  rule  Rule       @relation(fields: [rule_id], references: [id])
+
+  @@map("RE_RuleGroupRule")
+}
+
+model rule_execution_logs {
+  id              Int      @id @default(autoincrement())
+  group_id        Int      @db.Integer
+  input_payload   Json     @db.JsonB
+  output_payload  Json     @db.JsonB
+  rules_triggered Json     @db.JsonB
+  execution_time  Int      @db.Integer
+  created_at      DateTime @default(now())
+
+  //relations
+  group Rule_Group @relation(fields: [group_id], references: [id])
+
+  @@map("RE_RuleExecutionLogs")
+}
