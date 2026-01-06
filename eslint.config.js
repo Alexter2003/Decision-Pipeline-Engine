@@ -5,10 +5,8 @@ import prettier from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 
 export default [
-  // Configuración base de JavaScript
   js.configs.recommended,
 
-  // Configuración específica para TypeScript
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
@@ -42,18 +40,13 @@ export default [
       prettier: prettierPlugin,
     },
     rules: {
-      // Reglas de TypeScript - ESTRICTAS PERO ÚTILES
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_' },
-      ],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/no-var-requires': 'error',
 
-      // Reglas de JavaScript - MODERNAS
       'no-console': 'warn',
       'no-debugger': 'error',
       'no-alert': 'error',
@@ -68,7 +61,6 @@ export default [
       'arrow-spacing': 'error',
       'no-duplicate-imports': 'error',
 
-      // Reglas de estilo - CONSISTENTES
       'comma-dangle': ['error', 'es5'],
       quotes: ['error', 'single', { avoidEscape: true }],
       semi: ['error', 'always'],
@@ -77,22 +69,13 @@ export default [
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
 
-      // Reglas de Prettier - PARA QUE NO CONFLICTÚE CON ESLINT
       'prettier/prettier': 'error',
     },
   },
 
-  // Configuración de Prettier - SIEMPRE AL FINAL
   prettier,
 
-  // Ignorar archivos específicos
   {
-    ignores: [
-      'dist/**',
-      'node_modules/**',
-      'coverage/**',
-      '*.min.js',
-      'prisma/migrations/**',
-    ],
+    ignores: ['dist/**', 'node_modules/**', 'coverage/**', '*.min.js', 'prisma/migrations/**'],
   },
 ];
