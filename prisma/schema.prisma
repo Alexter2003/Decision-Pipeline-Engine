@@ -23,7 +23,7 @@ model Rule_Group {
 
   //relations
   ruleGroupRules    Rule_Group_Rule[]
-  ruleExecutionLogs rule_execution_logs[]
+  ruleExecutionLogs Rule_execution_logs[]
 
   @@map("RE_RuleGroup")
 }
@@ -57,7 +57,7 @@ model Rule_Group_Rule {
   @@map("RE_RuleGroupRule")
 }
 
-model rule_execution_logs {
+model Rule_execution_logs {
   id              Int      @id @default(autoincrement())
   group_id        Int      @db.Integer
   input_payload   Json     @db.JsonB
