@@ -12,20 +12,24 @@ export class Condition {
     private readonly operator: Operator,
     private readonly value: ConditionValue
   ) {
-    if (!field) throw new Error('You need a field for you condition');
+    this.validate();
+  }
 
-    if (!Object.values(Operator).includes(operator)) {
+  private validate(): void {
+    if (!this.field) throw new Error('You need a field for you condition');
+
+    if (!Object.values(Operator).includes(this.operator)) {
       let operatorValues: string[];
       throw new Error('You need a operator valid: ' + Object.values(Operator));
     }
 
-    if (
-      typeof value === 'boolean' ||
-      typeof value === 'number' ||
-      (Array.isArray(value) && value.every(v => typeof v === 'string'))
-    ) {
-        throw new Error("Invalied value type");
-        
-    }
+    const isValid = typeof this.value === 'boolean' || typeof this.value === 'number';
+
+    const isValidArray =
+      Array.isArray(this.value) &&
+      this.value.every(v => typeof v === 'string' || typeof v === 'number');
+
+    if (!isValid && !isValidArray)
+      throw new Error('Invalid value type. Must be string, number, boolean or array of these');
   }
 }
