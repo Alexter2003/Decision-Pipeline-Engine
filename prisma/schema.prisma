@@ -29,15 +29,15 @@ model Rule_Group {
 }
 
 model Rule {
-  id             Int      @id @default(autoincrement())
-  name           String   @db.VarChar(155)
-  description    String?  @db.VarChar(255)
-  priority       Int      @default(0)
-  decision_logic Json     @default("{}") @db.JsonB
-  outcome        Json     @default("{}") @db.JsonB
-  is_active      Boolean  @default(true)
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(155)
+  description     String?  @db.VarChar(255)
+  priority        Int      @default(0)
+  condition_block Json     @default("{}") @db.JsonB
+  outcome         Json     @default("{}") @db.JsonB
+  is_active       Boolean  @default(true)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
 
   //relations
   ruleGroupRules Rule_Group_Rule[]
