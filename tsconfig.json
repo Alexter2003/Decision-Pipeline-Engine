@@ -10,8 +10,9 @@
     "baseUrl": "./",
     "paths": {
       "#/*": ["./src/*"],
+      "#/domain/*": ["./src/domain/*"],
       "#/infraestructure/*": ["./src/infrastructure/*"]
     }
   },
-  "include": ["src", "prisma.config.ts"]
+  "include": ["src", "prisma.config.ts", "test"]
 }
