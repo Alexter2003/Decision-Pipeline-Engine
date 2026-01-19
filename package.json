@@ -5,10 +5,16 @@
   "main": "dist/src/index.js",
   "type": "module",
   "imports": {
-    "#/*": "./src/*.js"
+    "#/*": "./src/*.js",
+    "#/domain/*": [
+      "./src/domain/*.js"
+    ],
+    "#/infrastructure/*": "./src/infrastructure/*.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "start": "node dist/src/index.js",
     "dev": "nodemon --exec ts-node-esm src/index.ts",
     "lint": "eslint src/**/*.ts",
@@ -31,7 +37,9 @@
     "prettier": "^3.7.4",
     "prisma": "^7.2.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite-tsconfig-paths": "^6.0.4",
+    "vitest": "^4.0.17"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",
